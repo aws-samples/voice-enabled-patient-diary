@@ -1,0 +1,62 @@
+{
+  "messageVersion": "1.0",
+  "invocationSource": "DialogCodeHook",
+  "userId": "r5h8x76i0c0krb4d48bj89y9a7r9ize6",
+  "sessionAttributes": {
+    "transcripts": "[{\"time\": \"2020-06-13T17:51:19.948087\", \"user\": \"i have a rash\"}, {\"time\": \"2020-06-13T17:52:03.670879\", \"user\": \"i have a rash\"}]"
+  },
+  "requestAttributes": null,
+  "bot": {
+    "name": "SymptomReport",
+    "alias": "$LATEST",
+    "version": "$LATEST"
+  },
+  "outputDialogMode": "Text",
+  "currentIntent": {
+    "name": "ReportSymptom",
+    "slots": {
+      "symptom": null,
+      "symptom_two": null,
+      "modifier": null,
+      "bodyPart": null
+    },
+    "slotDetails": {
+      "symptom": {
+        "resolutions": [],
+        "originalValue": "arm"
+      },
+      "symptom_two": {
+        "resolutions": [],
+        "originalValue": null
+      },
+      "modifier": {
+        "resolutions": [],
+        "originalValue": null
+      },
+      "bodyPart": {
+        "resolutions": [],
+        "originalValue": null
+      }
+    },
+    "confirmationStatus": "None"
+  },
+  "inputTranscript": "arm",
+  "recentIntentSummaryView": [
+    {
+      "intentName": "ReportSymptom",
+      "checkpointLabel": null,
+      "slots": {
+        "symptom": "rash",
+        "symptom_two": null,
+        "modifier": null,
+        "bodyPart": null
+      },
+      "confirmationStatus": "None",
+      "dialogActionType": "ElicitSlot",
+      "fulfillmentState": null,
+      "slotToElicit": "symptom"
+    }
+  ],
+  "sentimentResponse": null,
+  "kendraResponse": null
+}

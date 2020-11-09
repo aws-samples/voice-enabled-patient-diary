@@ -1,0 +1,790 @@
+{
+  "modules": [
+    {
+      "id": "bdce4136-a661-4e8d-9f4c-cdc08a93c069",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "731e1481-9b3d-4cb2-ae37-06378f07c0b4"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "If this is an emergency, please hang up, and dial 911.",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1682.9999820295488,
+          "y": 47
+        },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "9a2f1017-7e6c-47b1-98d5-053a6a582142",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "2b4d6b54-8499-47f7-831a-319daab939dd"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Sorry, I do not recognize your phone number. Please call from a number you have registered with to report your diary.",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1659.9999820295488,
+          "y": 338
+        },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "e751eac2-57a8-49f1-b004-ab18cf10e024",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "2b4d6b54-8499-47f7-831a-319daab939dd"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "You have completed reporting for today. Have a nice day!",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 2707,
+          "y": 840
+        },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "5c50b81c-db19-4776-b4bb-7358f04923b9",
+      "type": "GetUserInput",
+      "branches": [
+        {
+          "condition": "NoMatch",
+          "transition": "7bda01dd-2551-4432-980d-c37729e055be"
+        },
+        {
+          "condition": "Error",
+          "transition": "b7258de8-0f7d-41c3-b573-50e20cfb7d0c"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Do you have any symptoms to report today?",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        },
+        {
+          "name": "BotName",
+          "value": "SymptomReport"
+        },
+        {
+          "name": "BotAlias",
+          "value": "dev"
+        },
+        {
+          "name": "BotRegion",
+          "value": "us-east-1"
+        },
+        {
+          "name": "Parameter",
+          "key": "IncomingNumber",
+          "value": "Customer Number",
+          "namespace": "System"
+        },
+        {
+          "name": "Parameter",
+          "key": "Source",
+          "value": "AmazonConnect",
+          "namespace": null
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 2681,
+          "y": 50
+        },
+        "conditionMetadata": [],
+        "useDynamic": false,
+        "dynamicMetadata": {
+          "IncomingNumber": true,
+          "Source": false
+        }
+      },
+      "target": "Lex"
+    },
+    {
+      "id": "9c2ffdf3-b576-417b-982b-89d69b1a9109",
+      "type": "GetUserInput",
+      "branches": [
+        {
+          "condition": "NoMatch",
+          "transition": "7bda01dd-2551-4432-980d-c37729e055be"
+        },
+        {
+          "condition": "Error",
+          "transition": "b7258de8-0f7d-41c3-b573-50e20cfb7d0c"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Now let's track your medication. When did you take your medication today?",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        },
+        {
+          "name": "BotName",
+          "value": "Medication"
+        },
+        {
+          "name": "BotAlias",
+          "value": "dev"
+        },
+        {
+          "name": "BotRegion",
+          "value": "us-east-1"
+        },
+        {
+          "name": "Parameter",
+          "key": "IncomingNumber",
+          "value": "Customer Number",
+          "namespace": "System"
+        },
+        {
+          "name": "Parameter",
+          "key": "Source",
+          "value": "AmazonConnect",
+          "namespace": null
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 2709,
+          "y": 313
+        },
+        "conditionMetadata": [],
+        "useDynamic": false,
+        "dynamicMetadata": {
+          "IncomingNumber": true,
+          "Source": false
+        }
+      },
+      "target": "Lex"
+    },
+    {
+      "id": "e219b5d6-1776-4272-b0f1-958e960f7dd7",
+      "type": "CheckAttribute",
+      "branches": [
+        {
+          "condition": "Evaluate",
+          "conditionType": "Equals",
+          "conditionValue": "AuthSuccess",
+          "transition": "7bda01dd-2551-4432-980d-c37729e055be"
+        },
+        {
+          "condition": "Evaluate",
+          "conditionType": "Equals",
+          "conditionValue": "AuthFail",
+          "transition": "2b4d6b54-8499-47f7-831a-319daab939dd"
+        },
+        {
+          "condition": "NoMatch",
+          "transition": "b7258de8-0f7d-41c3-b573-50e20cfb7d0c"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "AuthResult"
+        },
+        {
+          "name": "Namespace",
+          "value": "Lex.SessionAttributes"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 2132,
+          "y": 25
+        },
+        "conditionMetadata": [
+          {
+            "id": "fab75b0e-fe79-4227-aaa9-5523521a2412",
+            "operator": {
+              "name": "Equals",
+              "value": "Equals",
+              "shortDisplay": "="
+            },
+            "value": "AuthSuccess"
+          },
+          {
+            "id": "3bf81b91-e430-487e-8d2f-5b032da22326",
+            "operator": {
+              "name": "Equals",
+              "value": "Equals",
+              "shortDisplay": "="
+            },
+            "value": "AuthFail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "7bda01dd-2551-4432-980d-c37729e055be",
+      "type": "CheckAttribute",
+      "branches": [
+        {
+          "condition": "Evaluate",
+          "conditionType": "Equals",
+          "conditionValue": "SymptomReport",
+          "transition": "5c50b81c-db19-4776-b4bb-7358f04923b9"
+        },
+        {
+          "condition": "Evaluate",
+          "conditionType": "Equals",
+          "conditionValue": "Medication",
+          "transition": "9c2ffdf3-b576-417b-982b-89d69b1a9109"
+        },
+        {
+          "condition": "NoMatch",
+          "transition": "e751eac2-57a8-49f1-b004-ab18cf10e024"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "NextBot"
+        },
+        {
+          "name": "Namespace",
+          "value": "Lex.SessionAttributes"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 2381,
+          "y": 22
+        },
+        "conditionMetadata": [
+          {
+            "id": "65fa998a-d54b-4d84-9f15-05dacc7a57f4",
+            "operator": {
+              "name": "Equals",
+              "value": "Equals",
+              "shortDisplay": "="
+            },
+            "value": "SymptomReport"
+          },
+          {
+            "id": "ff4049e0-4c43-402a-a77e-b4934d79b34b",
+            "operator": {
+              "name": "Equals",
+              "value": "Equals",
+              "shortDisplay": "="
+            },
+            "value": "Medication"
+          }
+        ]
+      }
+    },
+    {
+      "id": "d2caf4f9-d628-4b54-8b4b-1ea469104c1d",
+      "type": "CheckAttribute",
+      "branches": [
+        {
+          "condition": "Evaluate",
+          "conditionType": "Equals",
+          "conditionValue": "Registered",
+          "transition": "bdce4136-a661-4e8d-9f4c-cdc08a93c069"
+        },
+        {
+          "condition": "Evaluate",
+          "conditionType": "Equals",
+          "conditionValue": "NotRegistered",
+          "transition": "9a2f1017-7e6c-47b1-98d5-053a6a582142"
+        },
+        {
+          "condition": "NoMatch",
+          "transition": "b7258de8-0f7d-41c3-b573-50e20cfb7d0c"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "NumberRegistered"
+        },
+        {
+          "name": "Namespace",
+          "value": "External"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1440,
+          "y": 11
+        },
+        "conditionMetadata": [
+          {
+            "id": "840f2bbb-212c-4d09-8fe5-7f86fde87e68",
+            "operator": {
+              "name": "Equals",
+              "value": "Equals",
+              "shortDisplay": "="
+            },
+            "value": "Registered"
+          },
+          {
+            "id": "02a1b387-9553-4045-a6bc-5b761f24f9bd",
+            "operator": {
+              "name": "Equals",
+              "value": "Equals",
+              "shortDisplay": "="
+            },
+            "value": "NotRegistered"
+          }
+        ]
+      }
+    },
+    {
+      "id": "d1e95e7e-da26-46f2-84af-1832ea66e3c8",
+      "type": "InvokeExternalResource",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "d2caf4f9-d628-4b54-8b4b-1ea469104c1d"
+        },
+        {
+          "condition": "Error",
+          "transition": "b7258de8-0f7d-41c3-b573-50e20cfb7d0c"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "FunctionArn",
+          "value": "arn:aws:lambda:us-east-1:012345678912:function:EproVoiceStack-CheckIncomingNumber79D166FB-CL5VB61ZFQXH",
+          "namespace": null
+        },
+        {
+          "name": "TimeLimit",
+          "value": "3"
+        },
+        {
+          "name": "Parameter",
+          "key": "IncomingNumber",
+          "value": "Customer Number",
+          "namespace": "System"
+        },
+        {
+          "name": "Parameter",
+          "key": "Source",
+          "value": "AmazonConnect",
+          "namespace": null
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1186.9999820295488,
+          "y": 18
+        },
+        "dynamicMetadata": {
+          "IncomingNumber": true,
+          "Source": false
+        },
+        "useDynamic": false
+      },
+      "target": "Lambda"
+    },
+    {
+      "id": "731e1481-9b3d-4cb2-ae37-06378f07c0b4",
+      "type": "GetUserInput",
+      "branches": [
+        {
+          "condition": "Evaluate",
+          "conditionType": "Equals",
+          "conditionValue": "VerifyIdentity",
+          "transition": "e219b5d6-1776-4272-b0f1-958e960f7dd7"
+        },
+        {
+          "condition": "NoMatch",
+          "transition": "7bda01dd-2551-4432-980d-c37729e055be"
+        },
+        {
+          "condition": "Error",
+          "transition": "b7258de8-0f7d-41c3-b573-50e20cfb7d0c"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "<speak>To verify your identity, can you tell me your zipcode? </speak>",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "ssml"
+        },
+        {
+          "name": "BotName",
+          "value": "VerifyIdentity"
+        },
+        {
+          "name": "BotAlias",
+          "value": "dev"
+        },
+        {
+          "name": "BotRegion",
+          "value": "us-east-1"
+        },
+        {
+          "name": "Parameter",
+          "key": "IncomingNumber",
+          "value": "Customer Number",
+          "namespace": "System"
+        },
+        {
+          "name": "Parameter",
+          "key": "Source",
+          "value": "AmazonConnect",
+          "namespace": null
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1899.9999820295488,
+          "y": 32
+        },
+        "conditionMetadata": [
+          {
+            "id": "11d3989b-3221-4294-af29-05572b821a24",
+            "value": "VerifyIdentity"
+          }
+        ],
+        "useDynamic": false,
+        "dynamicMetadata": {
+          "IncomingNumber": true,
+          "Source": false
+        }
+      },
+      "target": "Lex"
+    },
+    {
+      "id": "2b4d6b54-8499-47f7-831a-319daab939dd",
+      "type": "Disconnect",
+      "branches": [],
+      "parameters": [],
+      "metadata": {
+        "position": {
+          "x": 1386.9999820295488,
+          "y": 812
+        }
+      }
+    },
+    {
+      "id": "a1b317c9-f443-4073-98f3-48c84875f867",
+      "type": "GetUserInput",
+      "branches": [
+        {
+          "condition": "Evaluate",
+          "conditionType": "Equals",
+          "conditionValue": "YesReportNow",
+          "transition": "731e1481-9b3d-4cb2-ae37-06378f07c0b4"
+        },
+        {
+          "condition": "Evaluate",
+          "conditionType": "Equals",
+          "conditionValue": "NotAGoodTime",
+          "transition": "2b4d6b54-8499-47f7-831a-319daab939dd"
+        },
+        {
+          "condition": "NoMatch",
+          "transition": "2b4d6b54-8499-47f7-831a-319daab939dd"
+        },
+        {
+          "condition": "Error",
+          "transition": "2b4d6b54-8499-47f7-831a-319daab939dd"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Are you available to answer a few questions now?",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        },
+        {
+          "name": "BotName",
+          "value": "ConfirmTimeToReport"
+        },
+        {
+          "name": "BotAlias",
+          "value": "dev"
+        },
+        {
+          "name": "BotRegion",
+          "value": "us-east-1"
+        },
+        {
+          "name": "Parameter",
+          "key": "IncomingNumber",
+          "value": "Customer Number",
+          "namespace": "System"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1353.9999820295488,
+          "y": 413
+        },
+        "conditionMetadata": [
+          {
+            "id": "b52f8226-1a19-41f2-ac4d-0ad3c016da44",
+            "value": "YesReportNow"
+          },
+          {
+            "id": "e82f5702-72ff-4c5f-8a03-87ea3f0a9f28",
+            "value": "NotAGoodTime"
+          }
+        ],
+        "useDynamic": false,
+        "dynamicMetadata": {
+          "IncomingNumber": true
+        }
+      },
+      "target": "Lex"
+    },
+    {
+      "id": "9e6d7870-e3f2-40d8-83da-c9be37d54873",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "d1e95e7e-da26-46f2-84af-1832ea66e3c8"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "<speak>Hello! Clinical trial assistant at your service. </speak>",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "ssml"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 847,
+          "y": 11
+        },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "4e6cf3ae-c25c-4b03-8af0-9093a400b73f",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "a1b317c9-f443-4073-98f3-48c84875f867"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Hello. This is clinical trial assistant. It is time to report your patient diary.",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 1103.9999820295488,
+          "y": 403
+        },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "b7258de8-0f7d-41c3-b573-50e20cfb7d0c",
+      "type": "PlayPrompt",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "2b4d6b54-8499-47f7-831a-319daab939dd"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Text",
+          "value": "Sorry, we have encountered a problem. Please try again later. Have a nice day",
+          "namespace": null
+        },
+        {
+          "name": "TextToSpeechType",
+          "value": "text"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 969.9999760393985,
+          "y": 748.8358258578528
+        },
+        "useDynamic": false
+      }
+    },
+    {
+      "id": "c07e01b5-e1e9-4f15-bccf-8c82241e54c8",
+      "type": "SetLoggingBehavior",
+      "branches": [
+        {
+          "condition": "Success",
+          "transition": "488483f9-4f27-4b7d-8973-8d5f18dace6d"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "LoggingBehavior",
+          "value": "Enable"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 212.4999760393987,
+          "y": 206.17135320676863
+        }
+      }
+    },
+    {
+      "id": "488483f9-4f27-4b7d-8973-8d5f18dace6d",
+      "type": "CheckAttribute",
+      "branches": [
+        {
+          "condition": "Evaluate",
+          "conditionType": "Equals",
+          "conditionValue": "INBOUND",
+          "transition": "9e6d7870-e3f2-40d8-83da-c9be37d54873"
+        },
+        {
+          "condition": "Evaluate",
+          "conditionType": "Equals",
+          "conditionValue": "OUTBOUND",
+          "transition": "4e6cf3ae-c25c-4b03-8af0-9093a400b73f"
+        },
+        {
+          "condition": "NoMatch",
+          "transition": "b7258de8-0f7d-41c3-b573-50e20cfb7d0c"
+        },
+        {
+          "condition": "Evaluate",
+          "conditionType": "Equals",
+          "conditionValue": "API",
+          "transition": "4e6cf3ae-c25c-4b03-8af0-9093a400b73f"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "Attribute",
+          "value": "InitiationMethod"
+        },
+        {
+          "name": "Namespace",
+          "value": "System"
+        }
+      ],
+      "metadata": {
+        "position": {
+          "x": 583,
+          "y": 102
+        },
+        "conditionMetadata": [
+          {
+            "id": "f751ff1a-858c-46bd-b05c-6d558bd2959d",
+            "operator": {
+              "name": "Equals",
+              "value": "Equals",
+              "shortDisplay": "="
+            },
+            "value": "INBOUND"
+          },
+          {
+            "id": "74ab74cf-60f9-415c-87b8-be5a29e96d72",
+            "operator": {
+              "name": "Equals",
+              "value": "Equals",
+              "shortDisplay": "="
+            },
+            "value": "OUTBOUND"
+          },
+          {
+            "id": "c9f4b739-983b-4909-8cf8-d92112cc78bd",
+            "operator": {
+              "name": "Equals",
+              "value": "Equals",
+              "shortDisplay": "="
+            },
+            "value": "API"
+          }
+        ]
+      }
+    }
+  ],
+  "version": "1",
+  "type": "contactFlow",
+  "start": "c07e01b5-e1e9-4f15-bccf-8c82241e54c8",
+  "metadata": {
+    "entryPointPosition": {
+      "x": 14.999976039398689,
+      "y": 263.30468450559675
+    },
+    "snapToGrid": false,
+    "name": "ePRO",
+    "description": "example application for patient diary reporting",
+    "type": "contactFlow",
+    "status": "published",
+    "hash": "5a49903711ce633ca4791ec59a2fc14e38a752424a3c2882dd612f197646bb84"
+  }
+}

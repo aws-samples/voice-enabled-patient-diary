@@ -1,0 +1,24 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+flake8 = "*"
+pytest = "*"
+awscli = "*"
+amazon-lex-bot-test = "*"
+amazon-lex-bot-deploy = "*"
+
+[packages]
+pytest = "*"
+pytz = "*"
+boto3="*"
+
+[requires]
+python_version = "3.7"
+
+[scripts]
+tests = "./run_tests.sh"
+deploy = "make deploy"
+install-deps = "sh -c \"find ./src -type f -name requirements.txt -exec pipenv run pip install -r {} \\;\""

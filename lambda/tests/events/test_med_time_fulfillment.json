@@ -1,0 +1,49 @@
+{
+  "messageVersion": "1.0",
+  "invocationSource": "DialogCodeHook",
+  "userId": "mxmojr3cirgztuhdz69kcqfb2ji5luov",
+  "sessionAttributes": null,
+  "requestAttributes": null,
+  "bot": {
+    "name": "Medication",
+    "alias": "$LATEST",
+    "version": "$LATEST"
+  },
+  "outputDialogMode": "Voice",
+  "currentIntent": {
+    "name": "MedicationTime",
+    "slots": {
+      "med_time": "05:30",
+      "time_of_day": "PM"
+    },
+    "slotDetails": {
+      "med_time": null,
+      "time_of_day": {
+        "resolutions": [
+          {
+            "value": "PM"
+          }
+        ],
+        "originalValue": "p.m."
+      }
+    },
+    "confirmationStatus": "None"
+  },
+  "inputTranscript": "p.m.",
+  "recentIntentSummaryView": [
+    {
+      "intentName": "MedicationTime",
+      "checkpointLabel": null,
+      "slots": {
+        "med_time": "05:30",
+        "time_of_day": null
+      },
+      "confirmationStatus": "None",
+      "dialogActionType": "ElicitSlot",
+      "fulfillmentState": null,
+      "slotToElicit": "time_of_day"
+    }
+  ],
+  "sentimentResponse": null,
+  "kendraResponse": null
+}

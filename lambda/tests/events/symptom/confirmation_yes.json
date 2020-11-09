@@ -1,0 +1,66 @@
+{
+  "messageVersion": "1.0",
+  "invocationSource": "DialogCodeHook",
+  "userId": "g8g5a5b94ig4cl95fhup4l7zajov29e4",
+  "sessionAttributes": {
+    "transcripts": "[{\"time\": \"2020-06-15T18:30:01.105732\", \"user\": \"i have a fever\"}]"
+  },
+  "requestAttributes": null,
+  "bot": {
+    "name": "SymptomReport",
+    "alias": "$LATEST",
+    "version": "$LATEST"
+  },
+  "outputDialogMode": "Text",
+  "currentIntent": {
+    "name": "ReportSymptom",
+    "slots": {
+      "symptom": "fever",
+      "symptom_two": null,
+      "modifier": null,
+      "bodyPart": null
+    },
+    "slotDetails": {
+      "symptom": {
+        "resolutions": [
+          {
+            "value": "fever"
+          }
+        ],
+        "originalValue": "fever"
+      },
+      "symptom_two": {
+        "resolutions": [],
+        "originalValue": null
+      },
+      "modifier": {
+        "resolutions": [],
+        "originalValue": null
+      },
+      "bodyPart": {
+        "resolutions": [],
+        "originalValue": null
+      }
+    },
+    "confirmationStatus": "Confirmed"
+  },
+  "inputTranscript": "yes",
+  "recentIntentSummaryView": [
+    {
+      "intentName": "ReportSymptom",
+      "checkpointLabel": null,
+      "slots": {
+        "symptom": "fever",
+        "symptom_two": null,
+        "modifier": null,
+        "bodyPart": null
+      },
+      "confirmationStatus": "None",
+      "dialogActionType": "ConfirmIntent",
+      "fulfillmentState": null,
+      "slotToElicit": null
+    }
+  ],
+  "sentimentResponse": null,
+  "kendraResponse": null
+}

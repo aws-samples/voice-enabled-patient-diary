@@ -1,0 +1,36 @@
+{
+  "messageVersion": "1.0",
+  "invocationSource": "FulfillmentCodeHook",
+  "userId": "479c2e75-a290-433f-a42e-5ee67fd73b9a",
+  "sessionAttributes": {
+    "IncomingNumber": "+12224567890",
+    "Source": "AmazonConnect"
+  },
+  "requestAttributes": {
+    "x-amz-lex:dtmf-transcript": "12345",
+    "x-amz-lex:accept-content-types": "PlainText,SSML"
+  },
+  "bot": {
+    "name": "VerifyIdentity",
+    "alias": "$LATEST",
+    "version": "$LATEST"
+  },
+  "outputDialogMode": "Text",
+  "currentIntent": {
+    "name": "VerifyIdentity",
+    "slots": {
+      "zipcode": "12345"
+    },
+    "slotDetails": {
+      "zipcode": {
+        "resolutions": [],
+        "originalValue": "12345"
+      }
+    },
+    "confirmationStatus": "None"
+  },
+  "inputTranscript": "12345",
+  "recentIntentSummaryView": null,
+  "sentimentResponse": null,
+  "kendraResponse": null
+}

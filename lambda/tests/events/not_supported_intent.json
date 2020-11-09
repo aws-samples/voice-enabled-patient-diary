@@ -1,0 +1,20 @@
+{
+  "messageVersion": "1.0",
+  "invocationSource": "FulfillmentCodeHook",
+  "userId": "o9vc4eng6lc3d5ntzji3xpgmve6c1p0l",
+  "sessionAttributes": {},
+  "requestAttributes": null,
+  "bot": {
+    "name": "Medication",
+    "alias": "$LATEST",
+    "version": "$LATEST"
+  },
+  "outputDialogMode": "Text",
+  "currentIntent": {
+    "name": "NotSupported",
+    "slots": {},
+    "slotDetails": {},
+    "confirmationStatus": "None"
+  },
+  "inputTranscript": "hello"
+}

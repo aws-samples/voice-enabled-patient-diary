@@ -1,0 +1,173 @@
+{
+  "metadata": {
+    "schemaVersion": "1.0",
+    "importType": "LEX",
+    "importFormat": "JSON"
+  },
+  "resource": {
+    "name": "Medication",
+    "version": "13",
+    "intents": [
+      {
+        "name": "MedicationTime",
+        "version": "19",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:012345678912:function:EproVoice-dev-MedicationDairyHandler-1BGN93QLO3R9Y",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "I took them at {med_time}",
+          "I took them in the {time_of_day}",
+          "{med_time}",
+          "{time_of_day}",
+          "I took them around {med_time}",
+          "{med_time} {time_of_day}",
+          "{time_of_day} at {med_time}"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "AMAZON.TIME",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "what time did you take your medication"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "med_time"
+          },
+          {
+            "sampleUtterances": [
+              "i took it {time_of_day}"
+            ],
+            "slotType": "TimeOfDay",
+            "slotTypeVersion": "3",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Optional",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Did you take it in the morning, afternoon or evening?"
+                }
+              ],
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}",
+              "maxAttempts": 2
+            },
+            "priority": 2,
+            "name": "time_of_day"
+          }
+        ],
+        "dialogCodeHook": {
+          "uri": "arn:aws:lambda:us-east-1:012345678912:function:EproVoice-dev-MedicationDairyHandler-1BGN93QLO3R9Y",
+          "messageVersion": "1.0"
+        }
+      },
+      {
+        "name": "YesMedication",
+        "version": "1",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:012345678912:function:EproVoice-dev-MedicationDairyHandler-1BGN93QLO3R9Y",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "yes",
+          "yes i did",
+          "I took my medication",
+          "I took my meds",
+          "I took them",
+          "yes i took it already",
+          "yep"
+        ],
+        "slots": []
+      },
+      {
+        "name": "NoMedication",
+        "version": "1",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:012345678912:function:EproVoice-dev-MedicationDairyHandler-1BGN93QLO3R9Y",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "nope",
+          "no",
+          "I didn't take it",
+          "I forgot to take it",
+          "I have not taken it yet",
+          "No I didn't",
+          "I didn't take my medication today",
+          "I didn't take my medication",
+          "I didn't take them",
+          "I haven't taken them",
+          "no i haven't",
+          "not yet",
+          "i haven't took it yet"
+        ],
+        "slots": []
+      }
+    ],
+    "slotTypes": [
+      {
+        "name": "TimeOfDay",
+        "version": "3",
+        "enumerationValues": [
+          {
+            "value": "AM",
+            "synonyms": [
+              "this morning",
+              "A.M.",
+              "in the morning"
+            ]
+          },
+          {
+            "value": "PM",
+            "synonyms": [
+              "afternoon",
+              "this afternoon",
+              "in the evening",
+              "at night"
+            ]
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      }
+    ],
+    "voiceId": "Joanna",
+    "childDirected": false,
+    "locale": "en-US",
+    "idleSessionTTLInSeconds": 300,
+    "clarificationPrompt": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, can you please repeat that?"
+        }
+      ],
+      "maxAttempts": 5
+    },
+    "abortStatement": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, I could not understand. Goodbye."
+        }
+      ]
+    },
+    "detectSentiment": false
+  }
+}

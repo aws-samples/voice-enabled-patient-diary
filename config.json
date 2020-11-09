@@ -1,0 +1,6 @@
+{
+  "aws_profile": "default",
+  "stack_config_name": "EproVoiceStack",
+  "stage": "dev",
+  "region": "us-east-1"
+}

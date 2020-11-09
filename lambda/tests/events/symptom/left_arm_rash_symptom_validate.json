@@ -1,0 +1,57 @@
+{
+  "messageVersion": "1.0",
+  "invocationSource": "DialogCodeHook",
+  "userId": "1av4xij76ci0pvqfzxek74utyfcfwxb1",
+  "sessionAttributes": {},
+  "requestAttributes": null,
+  "bot": {
+    "name": "SymptomReport",
+    "alias": "$LATEST",
+    "version": "$LATEST"
+  },
+  "outputDialogMode": "Text",
+  "currentIntent": {
+    "name": "ReportSymptom",
+    "slots": {
+      "symptom": "rash",
+      "symptom_two": null,
+      "modifier": "left",
+      "bodyPart": "arm"
+    },
+    "slotDetails": {
+      "symptom": {
+        "resolutions": [
+          {
+            "value": "rash"
+          }
+        ],
+        "originalValue": "rash"
+      },
+      "symptom_two": {
+        "resolutions": [],
+        "originalValue": null
+      },
+      "modifier": {
+        "resolutions": [
+          {
+            "value": "left"
+          }
+        ],
+        "originalValue": "left"
+      },
+      "bodyPart": {
+        "resolutions": [
+          {
+            "value": "arm"
+          }
+        ],
+        "originalValue": "arm"
+      }
+    },
+    "confirmationStatus": "None"
+  },
+  "inputTranscript": "i have a rash on my left arm",
+  "recentIntentSummaryView": null,
+  "sentimentResponse": null,
+  "kendraResponse": null
+}

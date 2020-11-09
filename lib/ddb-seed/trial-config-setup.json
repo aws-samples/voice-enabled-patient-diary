@@ -1,0 +1,24 @@
+[
+  {
+    "Participants": [
+      {
+        "EndDate": "2030/12/01",
+        "ID": "096b464",
+        "StartDate": "2020/09/01"
+      }
+    ],
+    "Surveys": {
+      "Medication": {
+        "BotName": "Medication",
+        "Frequency": "DAILY",
+        "Priority": 0
+      },
+      "Symptoms": {
+        "BotName": "SymptomReport",
+        "Frequency": "DAILY",
+        "Priority": 1
+      }
+    },
+    "Trial_ID": "VACCINE_TRIAL_2512"
+  }
+]

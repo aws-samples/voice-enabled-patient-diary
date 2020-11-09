@@ -1,0 +1,51 @@
+{
+  "messageVersion": "1.0",
+  "invocationSource": "FulfillmentCodeHook",
+  "userId": "o9vc4eng6lc3d5ntzji3xpgmve6c1p0l",
+  "sessionAttributes": {},
+  "requestAttributes": null,
+  "bot": {
+    "name": "ePROTest",
+    "alias": "$LATEST",
+    "version": "$LATEST"
+  },
+  "outputDialogMode": "Text",
+  "currentIntent": {
+    "name": "VerifyIdentity",
+    "slots": {
+      "firstName": "Angela",
+      "pin": "1234"
+    },
+    "slotDetails": {
+      "firstName": {
+        "resolutions": [],
+        "originalValue": "Angela"
+      },
+      "pin": {
+        "resolutions": [],
+        "originalValue": "1234"
+      }
+    },
+    "confirmationStatus": "None"
+  },
+  "inputTranscript": "1234",
+  "recentIntentSummaryView": [
+    {
+      "intentName": "VerifyIdentity",
+      "checkpointLabel": null,
+      "slots": {
+        "firstName": "Angela",
+        "pin": null
+      },
+      "confirmationStatus": "None",
+      "dialogActionType": "ElicitSlot",
+      "fulfillmentState": null,
+      "slotToElicit": "pin"
+    }
+  ],
+  "sentimentResponse": {
+    "sentimentLabel": "NEUTRAL",
+    "sentimentScore": "{Positive: 4.2981288E-4,Negative: 2.8927028E-4,Neutral: 0.9991672,Mixed: 1.1379396E-4}"
+  },
+  "kendraResponse": null
+}
