@@ -1,0 +1,495 @@
+{
+  "metadata": {
+    "schemaVersion": "1.0",
+    "importType": "LEX",
+    "importFormat": "JSON"
+  },
+  "resource": {
+    "name": "SymptomReport",
+    "version": "29",
+    "intents": [
+      {
+        "name": "ReportSymptom",
+        "version": "39",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:012345678912:function:EproVoice-dev-GatherSymptomHandler-1978APOT96YQJ",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "Yes I have {symptom}",
+          "Yes I have a {symptom}",
+          "Yes I feel {symptom}",
+          "I feel {symptom}",
+          "I'm having {symptom}",
+          "I feel {bodyPart} {symptom}",
+          "I have {symptom} in {bodyPart}",
+          "I have {symptom} in my {bodyPart}",
+          "I have {symptom} in my {modifier} {bodyPart}",
+          "I feel {symptom} in my {modifier} {bodyPart}",
+          "my {bodyPart} {symptom}",
+          "I am feeling {symptom}",
+          "I am {symptom}",
+          "I'm {symptom}",
+          "my {bodyPart} feels {symptom}"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [
+              "in my {bodyPart}",
+              "it is in my {bodyPart}",
+              "it is on my {bodyPart}",
+              "on my {bodyPart}",
+              "it's on my {bodyPart}",
+              "it's in my {bodyPart}"
+            ],
+            "slotType": "BodyPart",
+            "slotTypeVersion": "10",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Optional",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Can you tell me where you have {symptom}?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 2,
+            "name": "bodyPart"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "BodyPartModifier",
+            "slotTypeVersion": "2",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Optional",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "where is your symptom?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 3,
+            "name": "modifier"
+          },
+          {
+            "sampleUtterances": [
+              "maybe {painLevel}",
+              "about {painLevel} I'd say",
+              "I think maybe a {painLevel}",
+              "uh probably {painLevel}",
+              "probably a {painLevel}",
+              "I would give it a {painLevel}",
+              "I would say it's a  {painLevel}",
+              "around  {painLevel}",
+              "I would rate it a {painLevel}",
+              "i think it's a {painLevel}"
+            ],
+            "slotType": "AMAZON.NUMBER",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Optional",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "On the scale of 0 to 10, how would you rate the amount of pain you've been experiencing?"
+                }
+              ],
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\"}",
+              "maxAttempts": 2
+            },
+            "priority": 5,
+            "name": "painLevel"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "Symptom",
+            "slotTypeVersion": "11",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "What's your symptom?"
+                }
+              ],
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[]}",
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "symptom"
+          }
+        ],
+        "dialogCodeHook": {
+          "uri": "arn:aws:lambda:us-east-1:012345678912:function:EproVoice-dev-GatherSymptomHandler-1978APOT96YQJ",
+          "messageVersion": "1.0"
+        }
+      },
+      {
+        "name": "SymptomFallback",
+        "version": "1",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:012345678912:function:EproVoice-dev-GatherSymptomHandler-1978APOT96YQJ",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [],
+        "slots": [],
+        "parentIntentSignature": "AMAZON.FallbackIntent"
+      },
+      {
+        "name": "YesSymptom",
+        "version": "3",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:012345678912:function:EproVoice-dev-GatherSymptomHandler-1978APOT96YQJ",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "Yes",
+          "um yes",
+          "ah yes",
+          "hmm yes",
+          "yes i do",
+          "yes i have"
+        ],
+        "slots": []
+      },
+      {
+        "name": "NoSymptom",
+        "version": "6",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:012345678912:function:EproVoice-dev-GatherSymptomHandler-1978APOT96YQJ",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "Nope",
+          "No",
+          "no symptoms",
+          "no more symptoms",
+          "no that's all",
+          "um no",
+          "hmm no",
+          "I have no symptoms to report",
+          "none",
+          "I have no symptoms",
+          "No I don't",
+          "I don't have any",
+          "I feel fine",
+          "no i have no symptoms",
+          "no i don't have anything to report",
+          "no I have no symptoms to report"
+        ],
+        "slots": []
+      }
+    ],
+    "slotTypes": [
+      {
+        "description": "part of body",
+        "name": "BodyPart",
+        "version": "10",
+        "enumerationValues": [
+          {
+            "value": "feet",
+            "synonyms": [
+              "foot"
+            ]
+          },
+          {
+            "value": "all over",
+            "synonyms": [
+              "everywhere",
+              "every where",
+              "all over my body"
+            ]
+          },
+          {
+            "value": "elbow"
+          },
+          {
+            "value": "joint",
+            "synonyms": [
+              "joints"
+            ]
+          },
+          {
+            "value": "thigh"
+          },
+          {
+            "value": "skin"
+          },
+          {
+            "value": "back"
+          },
+          {
+            "value": "hip"
+          },
+          {
+            "value": "leg",
+            "synonyms": [
+              "legs"
+            ]
+          },
+          {
+            "value": "shin"
+          },
+          {
+            "value": "head"
+          },
+          {
+            "value": "ear",
+            "synonyms": [
+              "ears"
+            ]
+          },
+          {
+            "value": "shoulder"
+          },
+          {
+            "value": "ankle",
+            "synonyms": [
+              "heel",
+              "heels"
+            ]
+          },
+          {
+            "value": "arm"
+          },
+          {
+            "value": "tooth",
+            "synonyms": [
+              "teeth"
+            ]
+          },
+          {
+            "value": "hand",
+            "synonyms": [
+              "hands"
+            ]
+          },
+          {
+            "value": "finger",
+            "synonyms": [
+              "fingers"
+            ]
+          },
+          {
+            "value": "nose"
+          },
+          {
+            "value": "chest"
+          },
+          {
+            "value": "neck"
+          },
+          {
+            "value": "eye",
+            "synonyms": [
+              "eyes"
+            ]
+          },
+          {
+            "value": "knee",
+            "synonyms": [
+              "knees"
+            ]
+          },
+          {
+            "value": "face"
+          },
+          {
+            "value": "calf",
+            "synonyms": [
+              "calves"
+            ]
+          },
+          {
+            "value": "buttocks",
+            "synonyms": [
+              "butt",
+              "buttock",
+              "butt cheeks"
+            ]
+          },
+          {
+            "value": "abdomen",
+            "synonyms": [
+              "abdominal",
+              "tummy",
+              "belly",
+              "stomach"
+            ]
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      },
+      {
+        "name": "BodyPartModifier",
+        "version": "2",
+        "enumerationValues": [
+          {
+            "value": "left"
+          },
+          {
+            "value": "lower"
+          },
+          {
+            "value": "upper"
+          },
+          {
+            "value": "right"
+          },
+          {
+            "value": "both"
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      },
+      {
+        "description": "symptoms",
+        "name": "Symptom",
+        "version": "11",
+        "enumerationValues": [
+          {
+            "value": "itch",
+            "synonyms": [
+              "itches"
+            ]
+          },
+          {
+            "value": "pain",
+            "synonyms": [
+              "in pain",
+              "ache",
+              "achey",
+              "achy",
+              "hurts",
+              "hurts badly",
+              "hurts a lot",
+              "sore",
+              "hurt",
+              "aches",
+              "pains"
+            ]
+          },
+          {
+            "value": "dizzy"
+          },
+          {
+            "value": "sore throat"
+          },
+          {
+            "value": "tired",
+            "synonyms": [
+              "fatigued",
+              "fatigue",
+              "lethargic",
+              "lethargy",
+              "exhausted"
+            ]
+          },
+          {
+            "value": "fever"
+          },
+          {
+            "value": "swelling",
+            "synonyms": [
+              "swelled up",
+              "bump"
+            ]
+          },
+          {
+            "value": "diarrhea"
+          },
+          {
+            "value": "cough",
+            "synonyms": [
+              "coughing",
+              "coughs"
+            ]
+          },
+          {
+            "value": "rash",
+            "synonyms": [
+              "rashes"
+            ]
+          },
+          {
+            "value": "nauseous",
+            "synonyms": [
+              "nausea"
+            ]
+          },
+          {
+            "value": "chills"
+          },
+          {
+            "value": "sneezing",
+            "synonyms": [
+              "sneeze"
+            ]
+          },
+          {
+            "value": "light-headed",
+            "synonyms": [
+              "light headed"
+            ]
+          },
+          {
+            "value": "heart attack",
+            "synonyms": [
+              "cardiac arrest"
+            ]
+          },
+          {
+            "value": "headache"
+          },
+          {
+            "value": "stroke"
+          },
+          {
+            "value": "cramp"
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      }
+    ],
+    "voiceId": "Joanna",
+    "childDirected": false,
+    "locale": "en-US",
+    "idleSessionTTLInSeconds": 600,
+    "clarificationPrompt": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, can you please repeat that?"
+        }
+      ],
+      "maxAttempts": 1
+    },
+    "abortStatement": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, I could not understand. Goodbye."
+        }
+      ]
+    },
+    "detectSentiment": false
+  }
+}

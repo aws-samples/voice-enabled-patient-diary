@@ -1,0 +1,26 @@
+{
+  "messageVersion": "1.0",
+  "invocationSource": "FulfillmentCodeHook",
+  "userId": "jlillb7vgxixri1plim9yw1xf6ptt9y1",
+  "sessionAttributes": {
+  },
+  "requestAttributes": null,
+  "bot": {
+    "name": "SymptomReport",
+    "alias": "$LATEST",
+    "version": "$LATEST"
+  },
+  "outputDialogMode": "Text",
+  "currentIntent": {
+    "name": "YesSymptom",
+    "slots": {
+    },
+    "slotDetails": {
+    },
+    "confirmationStatus": "None"
+  },
+  "inputTranscript": "yes",
+  "recentIntentSummaryView": null,
+  "sentimentResponse": null,
+  "kendraResponse": null
+}

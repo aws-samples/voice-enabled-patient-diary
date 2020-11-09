@@ -1,0 +1,45 @@
+{
+  "messageVersion": "1.0",
+  "invocationSource": "DialogCodeHook",
+  "userId": "19kzykdzioo2lmwo82x0pgeqx15aj7ct",
+  "sessionAttributes": {},
+  "requestAttributes": null,
+  "bot": {
+    "name": "Medication",
+    "alias": "$LATEST",
+    "version": "$LATEST"
+  },
+  "outputDialogMode": "Text",
+  "currentIntent": {
+    "name": "MedicationTime",
+    "slots": {
+      "med_time": null,
+      "time_of_day": null
+    },
+    "slotDetails": {
+      "med_time": {
+        "resolutions": [
+          {
+            "value": "15:00"
+          },
+          {
+            "value": "3:00"
+          }
+        ],
+        "originalValue": "noon"
+      },
+      "time_of_day": {
+        "resolutions": [],
+        "originalValue": null
+      }
+    },
+    "confirmationStatus": "None"
+  },
+  "inputTranscript": "i took them around noon",
+  "recentIntentSummaryView": null,
+  "sentimentResponse": {
+    "sentimentLabel": "NEUTRAL",
+    "sentimentScore": "{Positive: 0.11029922,Negative: 0.034059815,Neutral: 0.8556329,Mixed: 8.018736E-6}"
+  },
+  "kendraResponse": null
+}

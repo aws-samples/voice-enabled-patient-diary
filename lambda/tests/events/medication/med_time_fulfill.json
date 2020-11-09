@@ -1,0 +1,36 @@
+{
+  "messageVersion": "1.0",
+  "invocationSource": "FulfillmentCodeHook",
+  "userId": "11c05428-0010-4fad-8ab7-cb4edc9aa37b",
+  "sessionAttributes": {},
+  "requestAttributes": null,
+  "bot": {
+    "name": "Medication",
+    "alias": "$LATEST",
+    "version": "$LATEST"
+  },
+  "outputDialogMode": "Text",
+  "currentIntent": {
+    "name": "MedicationTime",
+    "slots": {
+      "med_time": "08:00",
+      "time_of_day": "AM"
+    },
+    "slotDetails": {
+      "med_time": null,
+      "time_of_day": {
+        "resolutions": [
+          {
+            "value": "AM"
+          }
+        ],
+        "originalValue": "a.m."
+      }
+    },
+    "confirmationStatus": "None"
+  },
+  "inputTranscript": "a.m.",
+  "recentIntentSummaryView": null,
+  "sentimentResponse": null,
+  "kendraResponse": null
+}

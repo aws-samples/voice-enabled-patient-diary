@@ -1,0 +1,9 @@
+{
+  "UserId": "096b464",
+  "TimeZone": "US/Eastern",
+  "Date": "2020/06/24",
+  "wait": {
+    "mode": "SECONDS",
+    "seconds": 2
+  }
+}
