@@ -2,7 +2,7 @@ messages = {
     'NOT_SUPPORTED': "Sorry, I'm unable to help with that.",
     'ZIP_CODE_MISMATCH': 'The zip code <say-as interpret-as="digits">{}</say-as>'
                          '<break time="100ms"/> did not match our records. ',
-    'ZIP_CODE_GOODBYE': 'Please check your profile on the Angeles app to make sure your info is up-to-date. Goodbye.',
+    'ZIP_CODE_GOODBYE': 'Please check your profile on our website or mobile app to make sure your info is up-to-date. Goodbye.',
     'ZIP_CODE_RETRY': 'Can you tell me your zip code one more time? ',
     'FINISH_MED_DIARY': "Got it. I have entered a medication dairy for you.",
     'ADDITIONAL_SYMPTOM_QUERY': "Do you have any other symptoms to report?",

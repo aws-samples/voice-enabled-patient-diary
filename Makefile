@@ -46,13 +46,9 @@ deploy.lex:
 
 delete: ##=> Delete services
 	$(MAKE) delete.backend
-	$(MAKE) delete.lex
 
 delete.backend: ##=> Delete backend services deployed through CDK
 	cdk destroy
-
-delete.lex:
-	$(info [*] Deleting Lex bots...)
 
 
 deploy.lex.confirm:
@@ -76,7 +72,6 @@ deploy.lex.med: ##=> Deploy medication diary Lex bot
 	$(info Medication diary Lex bot lambda: ${LAMBDA_ENDPOINT})
 
 	lex-bot-deploy -s lex-vui/Medication_Export.json --lambda-endpoint ${LAMBDA_ENDPOINT} --verbose --alias ${STAGE} --region ${AWS_REGION}
-
 
 deploy.lex.symptom: ##=> Deploy symptom Lex bot
 	$(info [*] Deploy symptom Lex bot...)
