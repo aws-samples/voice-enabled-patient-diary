@@ -67,6 +67,8 @@ Ensure you have the following in place before deploying the application
     ]
    ```
 
+1. If your aws cli is configured to run with a profiled different from `default`, change the `aws_profile` parameter in the `config.json` file
+
 1. Ensure you have CDK installed by running 
 
     ```
@@ -74,8 +76,10 @@ Ensure you have the following in place before deploying the application
     ```
     If you don't have it installed, follow documentation [here](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html) to install it.
 
-    Make sure that all the cdk libaries in the `package.json` file matches your cdk version. 
-
+    It's recommended to update CDK to the latest version. Use `npm update -g aws-cdk` to do so. 
+    
+    Note: Make sure that all the cdk libaries in the `package.json` file matches your cdk version. Edit the `package.json` file to match. 
+    
     Install npm dependencies to make sure the cdk dependencies work:
     
     ```
@@ -88,8 +92,8 @@ Ensure you have the following in place before deploying the application
     ```
     make init
     ```
-
-    Then 
+    
+    Then
     
     ```
     make deploy
