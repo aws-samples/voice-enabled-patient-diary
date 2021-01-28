@@ -34,7 +34,7 @@ Ensure you have the following in place before deploying the application
 1. In the cloned code directory, install python dependencies using `pipenv`: 
     
     ```
-    pipenv shell
+    pipenv --three shell
     pipenv install --dev
     ```
 1. Find the `lib/ddb-seed/patient-profile-setup.json` file - this file is used to seed the DynamoDB table that will look up the patient's profile data. Fill in the fields with information you'd like to test the application with.
@@ -67,10 +67,35 @@ Ensure you have the following in place before deploying the application
     ]
    ```
 
+1. If your aws cli is configured to run with a profiled different from `default`, change the `aws_profile` parameter in the `config.json` file
+
+1. Ensure you have CDK installed by running 
+
+    ```
+    cdk --version
+    ```
+    If you don't have it installed, follow documentation [here](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html) to install it.
+
+    It's recommended to update CDK to the latest version. Use `npm update -g aws-cdk` to do so. 
+    
+    Note: Make sure that all the cdk libaries in the `package.json` file matches your cdk version. Edit the `package.json` file to match. 
+    
+    Install npm dependencies to make sure the cdk dependencies work:
+    
+    ```
+    npm install
+    ```
+
+
 1. Deploy the backend AWS Lambda functions, DynamoDB database tables, and Amazon Lex bots by running the make commands:
     
-   ```
+    ```
     make init
+    ```
+    
+    Then
+    
+    ```
     make deploy
     ```
 

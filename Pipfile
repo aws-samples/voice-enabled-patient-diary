@@ -15,8 +15,6 @@ pytest = "*"
 pytz = "*"
 boto3="*"
 
-[requires]
-python_version = "3.7"
 
 [scripts]
 tests = "./run_tests.sh"
