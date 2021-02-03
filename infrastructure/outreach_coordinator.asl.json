@@ -1,0 +1,107 @@
+{
+  "StartAt": "Relative Or Absolute",
+  "States": {
+    "Relative Or Absolute": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.wait.mode",
+          "StringEquals": "SECONDS",
+          "Next": "Wait Seconds"
+        },
+        {
+          "Variable": "$.wait.mode",
+          "StringEquals": "TIMESTAMP",
+          "Next": "Wait till Timestamp"
+        }
+      ],
+      "Comment": "branch execution based on if wait needs to be relative or absolute"
+    },
+    "Wait Seconds": {
+      "Type": "Wait",
+      "SecondsPath": "$.wait.seconds",
+      "Next": "Check Diary Completion"
+    },
+    "Wait till Timestamp": {
+      "Type": "Wait",
+      "TimestampPath": "$.wait.timestamp",
+      "Next": "Check Diary Completion"
+    },
+    "Check Diary Completion": {
+      "Type": "Task",
+      "Resource": "${CheckCompletion}",
+      "TimeoutSeconds": 60,
+      "Next": "Diary Completed?"
+    },
+    "Diary Completed?": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "And": [
+            {
+              "Variable": "$.completed",
+              "BooleanEquals": false
+            },
+            {
+              "Variable": "$.outreach",
+              "StringEquals": "CallPatient"
+            }
+          ],
+          "Next": "Call User"
+        },
+        {
+          "And": [
+            {
+              "Variable": "$.completed",
+              "BooleanEquals": false
+            },
+            {
+              "Variable": "$.outreach",
+              "StringEquals": "TextPatient"
+            }
+          ],
+          "Next": "Text User"
+        },
+        {
+          "And": [
+            {
+              "Variable": "$.completed",
+              "BooleanEquals": false
+            },
+            {
+              "Variable": "$.outreach",
+              "StringEquals": "TextProvider"
+            }
+          ],
+          "Next": "Notify Provider"
+        },
+        {
+          "Variable": "$.completed",
+          "BooleanEquals": true,
+          "Next": "Completed"
+        }
+      ]
+    },
+    "Text User": {
+      "Type": "Task",
+      "Resource": "${TextPatientFunction}",
+      "TimeoutSeconds": 60,
+      "Next": "Relative Or Absolute"
+    },
+    "Call User": {
+      "Type": "Task",
+      "Resource": "${InitiateOutboundCallFunction}",
+      "TimeoutSeconds": 60,
+      "Next": "Relative Or Absolute"
+    },
+    "Notify Provider": {
+      "Type": "Task",
+      "Resource": "${NotifyProviderFunction}",
+      "TimeoutSeconds": 60,
+      "End": true
+    },
+    "Completed": {
+      "Type": "Succeed"
+    }
+  }
+}

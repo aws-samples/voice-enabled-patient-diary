@@ -1,0 +1,413 @@
+# Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: LicenseRef-.amazon.com.-AmznSL-1.0.
+# Licensed under the Amazon Software License  http://aws.amazon.com/asl/
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: voice prototype to capture patient reported outcomes
+Globals:
+  Function:
+    Runtime: python3.7
+    Timeout: 10 # seconds
+    Environment:
+      Variables:
+        LOG_LEVEL: "INFO"
+        PROFILE_TABLE: !Ref PatientProfileTable
+        SURVEY_COMPLETION_TABLE: !Ref SurveyCompletionTable
+        OUTREACH_BEFORE_TEXT_USER_DELAY: 60
+        OUTREACH_AFTER_TEXT_USER_DELAY: 90
+        OUTREACH_AFTER_CALL_USER_DELAY: 360
+
+Parameters:
+  Stage:
+    Description: environment name. e.g. dev, test, prod
+    Type: String
+
+Resources:
+  #######################
+  # Storage
+  #######################
+  LexConversationLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lex/${AWS::StackName}-LexLog"
+      RetentionInDays: 120
+
+  ConversationLogBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "conversation-log-${Stage}-${AWS::AccountId}-${AWS::Region}"
+
+  #######################
+  # ROLES
+  #######################
+  # TODO: narrow down permission
+  EproVoicePrototypeLambdaRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: "sts:AssumeRole"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
+      Policies:
+        - PolicyName: connect-outbound
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "connect:StartOutboundVoiceContact"
+                Resource: "*"
+
+  LexLogRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Policies:
+        - PolicyName: !Sub "${AWS::StackName}-LexLog"
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: !GetAtt LexConversationLogs.Arn
+              - Effect: Allow
+                Action:
+                  - s3:PutObject
+                Resource: !Sub "${ConversationLogBucket.Arn}/*"
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lex.amazonaws.com
+            Action: sts:AssumeRole
+
+  #######################
+  # LAMBDAS
+  #######################
+  OutreachScannerLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/lexhandler/app
+      Handler: src.outreach_scanner.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName:
+              !Ref TrialConfigTable
+        - DynamoDBCrudPolicy:
+            TableName:
+              !Ref SurveyCompletionTable
+        - DynamoDBReadPolicy:
+            TableName:
+              !Ref PatientProfileTable
+        - StepFunctionsExecutionPolicy:
+            StateMachineName:
+              !GetAtt OutreachSchedulerStateMachine.Name
+      Environment:
+        Variables:
+          TRIAL_CONFIG_TABLE: !Ref TrialConfigTable
+          OUTREACH_WORKFLOW: !Ref OutreachSchedulerStateMachine
+
+
+  CheckSurveyCompletionLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/lexhandler/app
+      Handler: src.check_survey_completion.lambda_handler
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName:
+              !Ref SurveyCompletionTable
+
+  InitiateOutboundCallLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/lexhandler/app
+      Handler: src.initiate_outbound_call.lambda_handler
+      Role: !GetAtt EproVoicePrototypeLambdaRole.Arn
+      Environment:
+        Variables:
+          CONNECT_INSTANCE_ID: "ddfffecf-dce0-410b-bcfd-6b6d4207908d"
+          CONNECT_FLOW_ID: "84f49b2f-22b6-4281-a732-cb6a2e851211"
+          SOURCE_NUMBER: "+16282682838"
+
+  TextPatientLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/lexhandler/app
+      Handler: src.text_patient.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName:
+              !Ref SurveyCompletionTable
+        - DynamoDBReadPolicy:
+            TableName:
+              !Ref PatientProfileTable
+        - Statement:
+            - Sid: "Pinpoint"
+              Effect: Allow
+              Action:
+                - mobiletargeting:SendMessages
+                - mobiletargeting:SendUsersMessages
+              Resource: !Sub "arn:aws:mobiletargeting:${AWS::Region}:${AWS::AccountId}:apps/*/messages"
+
+  NotifyProviderLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/lexhandler/app
+      Handler: src.notify_provider.lambda_handler
+      Timeout: 30
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName:
+              !Ref SurveyCompletionTable
+        - DynamoDBReadPolicy:
+            TableName:
+              !Ref PatientProfileTable
+        - Statement:
+            - Sid: "Pinpoint"
+              Effect: Allow
+              Action:
+                - mobiletargeting:SendMessages
+                - mobiletargeting:SendUsersMessages
+              Resource: !Sub "arn:aws:mobiletargeting:${AWS::Region}:${AWS::AccountId}:apps/*/messages"
+
+
+  TimeToReportHandler:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/lexhandler/app
+      Handler: src.confirm_report_time.lambda_handler
+      Role: !GetAtt EproVoicePrototypeLambdaRole.Arn
+
+  CheckIncomingNumberLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/lexhandler/app
+      Handler: src.check_incoming_number.lambda_handler
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName:
+              !Ref PatientProfileTable
+
+  MedicationDairyHandler:
+    Type: AWS::Serverless::Function
+    Description: 'Lex bot handler for logging medication.'
+    Properties:
+      CodeUri: ../src/lexhandler/app
+      Handler: src.medication_diary_bot.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName:
+              !Ref SurveyCompletionTable
+        - DynamoDBCrudPolicy:
+            TableName:
+              !Ref MedicationDiaryTable
+        - DynamoDBReadPolicy:
+            TableName:
+              !Ref PatientProfileTable
+        - Statement:
+            - Sid: "Pinpoint"
+              Effect: Allow
+              Action:
+                - mobiletargeting:SendMessages
+                - mobiletargeting:SendUsersMessages
+              Resource: !Sub "arn:aws:mobiletargeting:${AWS::Region}:${AWS::AccountId}:apps/*/messages"
+      Environment:
+        Variables:
+          MED_DIARY_TABLE: !Ref MedicationDiaryTable
+
+  VerifyIdentityHandler:
+    Type: AWS::Serverless::Function
+    Description: 'Lex bot handler for verifying caller identity'
+    Properties:
+      CodeUri: ../src/lexhandler/app
+      Handler: src.verify_identity_bot.lambda_handler
+      Role: !GetAtt EproVoicePrototypeLambdaRole.Arn
+
+  QualityOfLifeHandler:
+    Type: AWS::Serverless::Function
+    Description: 'Lex bot handler for gathering EQ-5D quality of life questions'
+    Properties:
+      CodeUri: ../src/lexhandler/app
+      Handler: src.quality_of_life_bot.lambda_handler
+      Role: !GetAtt EproVoicePrototypeLambdaRole.Arn
+      Environment:
+        Variables:
+          QOL_TABLE: !Ref QoLTable
+
+
+  GatherSymptomHandler:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/lexhandler/app
+      Handler: src.gather_symptom_bot.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName:
+              !Ref SymptomTable
+        - DynamoDBCrudPolicy:
+            TableName:
+              !Ref SurveyCompletionTable
+        - DynamoDBReadPolicy:
+            TableName:
+              !Ref PatientProfileTable
+        - Statement:
+            - Sid: "Pinpoint"
+              Effect: Allow
+              Action:
+                - mobiletargeting:SendMessages
+                - mobiletargeting:SendUsersMessages
+              Resource: !Sub "arn:aws:mobiletargeting:${AWS::Region}:${AWS::AccountId}:apps/*/messages"
+      Environment:
+        Variables:
+          SYMPTOM_TABLE: !Ref SymptomTable
+
+
+  #####################
+  # outreach coordinator
+  ######################
+
+  OutreachSchedulerStateMachine:
+    Type: "AWS::Serverless::StateMachine"
+    Properties:
+      Name: !Sub OutreachScheduler-${Stage}
+      DefinitionUri: outreach_coordinator.asl.json
+      DefinitionSubstitutions:
+        InitiateOutboundCallFunction: !GetAtt InitiateOutboundCallLambda.Arn
+        CheckCompletion: !GetAtt CheckSurveyCompletionLambda.Arn
+        TextPatientFunction: !GetAtt TextPatientLambda.Arn
+        NotifyProviderFunction: !GetAtt NotifyProviderLambda.Arn
+      Policies: # Find out more about SAM policy templates: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-templates.html
+        - LambdaInvokePolicy:
+            FunctionName: !Ref InitiateOutboundCallLambda
+        - LambdaInvokePolicy:
+            FunctionName: !Ref CheckSurveyCompletionLambda
+        - LambdaInvokePolicy:
+            FunctionName: !Ref TextPatientLambda
+        - LambdaInvokePolicy:
+            FunctionName: !Ref NotifyProviderLambda
+
+
+
+  ########################
+  # DB (mock backends. for production, this would integrate with actual patient info system)
+  ########################
+  MedicationDiaryTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${AWS::StackName}-MedicationDiary"
+      AttributeDefinitions:
+        - AttributeName: Patient_ID
+          AttributeType: "S"
+        - AttributeName: Time_Reported
+          AttributeType: "S"
+        - AttributeName: Time_Taken
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: Patient_ID
+          KeyType: HASH
+        - AttributeName: Time_Reported
+          KeyType: RANGE
+      GlobalSecondaryIndexes:
+        - IndexName: Patient_taken
+          KeySchema:
+            - AttributeName: Patient_ID
+              KeyType: HASH
+            - AttributeName: Time_Taken
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
+
+
+  SymptomTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${AWS::StackName}-Symptoms"
+      AttributeDefinitions:
+        - AttributeName: Patient_ID
+          AttributeType: "S"
+        - AttributeName: Time_Reported
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: Patient_ID
+          KeyType: HASH
+        - AttributeName: Time_Reported
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+
+  QoLTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${AWS::StackName}-QoL"
+      AttributeDefinitions:
+        - AttributeName: Patient_ID
+          AttributeType: "S"
+        - AttributeName: Time_Reported
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: Patient_ID
+          KeyType: HASH
+        - AttributeName: Time_Reported
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+
+
+  PatientProfileTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${AWS::StackName}-PatientProfile"
+      AttributeDefinitions:
+        - AttributeName: Patient_ID
+          AttributeType: "S"
+        - AttributeName: Phone_Num
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: Patient_ID
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: Patient_by_Phone
+          KeySchema:
+            - AttributeName: Phone_Num
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
+
+  SurveyCompletionTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${AWS::StackName}-SurveyCompletion"
+      AttributeDefinitions:
+        - AttributeName: Patient_ID
+          AttributeType: "S"
+        - AttributeName: Report_Date
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: Patient_ID
+          KeyType: HASH
+        - AttributeName: Report_Date
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+
+  TrialConfigTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${AWS::StackName}-TrialConfig"
+      AttributeDefinitions:
+        - AttributeName: Trial_ID
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: Trial_ID
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+
