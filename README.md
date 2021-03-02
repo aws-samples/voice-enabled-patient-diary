@@ -11,7 +11,7 @@ https://voice-enabled-patient-dairy-blog.s3.amazonaws.com/outbound+patient+repor
 
 ![](./doc-images/architecture.png)
 
-The application supports three different ways for patients to reach the patient dairy voice reporting interface: 
+The application supports three different ways for patients to reach the patient diary voice reporting interface: 
 - Making an inbound call through their smart phone or landline
 - Making an inbound call through a smart speaker such as Amazon Echo
 - Receiving an outbound call on their smart phone or landline –  initiated by an automated patient outreach scheduler that leverages the StartOutboundContact API of Amazon Connect 
