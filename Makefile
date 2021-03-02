@@ -68,7 +68,7 @@ deploy.lex.id: ##=> Deploy identify verification Lex bot
 
 deploy.lex.med: ##=> Deploy medication diary Lex bot
 	$(info [*] Deploy medication diary Lex bot...)
-	$(eval LAMBDA_ENDPOINT ?= $(call FromOutConf,$(STACK_OUTPUT_PATH),$(STACK_CONFIG_NAME), MedicationDairyHandlerArn))
+	$(eval LAMBDA_ENDPOINT ?= $(call FromOutConf,$(STACK_OUTPUT_PATH),$(STACK_CONFIG_NAME), MedicationDiaryHandlerArn))
 	$(info Medication diary Lex bot lambda: ${LAMBDA_ENDPOINT})
 
 	lex-bot-deploy -s lex-vui/Medication_Export.json --lambda-endpoint ${LAMBDA_ENDPOINT} --verbose --alias ${STAGE} --region ${AWS_REGION}
