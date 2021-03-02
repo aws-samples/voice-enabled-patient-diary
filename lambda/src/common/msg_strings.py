@@ -4,7 +4,7 @@ messages = {
                          '<break time="100ms"/> did not match our records. ',
     'ZIP_CODE_GOODBYE': 'Please check your profile on our website or mobile app to make sure your info is up-to-date. Goodbye.',
     'ZIP_CODE_RETRY': 'Can you tell me your zip code one more time? ',
-    'FINISH_MED_DIARY': "Got it. I have entered a medication dairy for you.",
+    'FINISH_MED_DIARY': "Got it. I have entered a medication diary for you.",
     'ADDITIONAL_SYMPTOM_QUERY': "Do you have any other symptoms to report?",
     'ASK_SYMPTOM_DETAIL': 'Can you tell me what symptoms you have, one at a time?',
     'ASK_SYMPTOM_FOLLOW_UP': 'What other symptom do you have?',
