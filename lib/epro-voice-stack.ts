@@ -104,13 +104,13 @@ export class EproVoiceStack extends cdk.Stack {
         LambdaFunctions.push(GatherSymptomLexHandler);
         SymptomTable.grantReadWriteData(GatherSymptomLexHandler);
 
-        const MedicationDairyHandler = new LambdaBase(this, 'MedicationDairyHandler', {
+        const MedicationDiaryHandler = new LambdaBase(this, 'MedicationDiaryHandler', {
             entry: 'lambda/src',
             index: 'medication_diary_bot.py',
             environment: EnvVariables
         })
-        LambdaFunctions.push(MedicationDairyHandler);
-        MedicationDiaryTable.grantReadWriteData(MedicationDairyHandler);
+        LambdaFunctions.push(MedicationDiaryHandler);
+        MedicationDiaryTable.grantReadWriteData(MedicationDiaryHandler);
 
         const SurveyCompletionScannerFunction = new LambdaBase(this, 'SurveyCompletionScanner', {
             entry: 'lambda/src',
@@ -155,8 +155,8 @@ export class EproVoiceStack extends cdk.Stack {
         Common.output(this, "GatherSymptomLexHandlerArn",
             GatherSymptomLexHandler.functionArn,
             "Lambda Arn for gather symptoms lex bot")
-        Common.output(this, "MedicationDairyHandlerArn",
-            MedicationDairyHandler.functionArn,
+        Common.output(this, "MedicationDiaryHandlerArn",
+            MedicationDiaryHandler.functionArn,
             "Lambda Arn for medication diary lex bot")
 
 
