@@ -25,7 +25,7 @@ Ensure you have the following in place before deploying the application
 * An [**AWS account**](https://portal.aws.amazon.com/billing/signup) in which you have administrative permissions 
 * [**AWS cli**](https://aws.amazon.com/cli/) installed and configured with your AWS account
 * **Python 3** and [**pipenv**](https://pypi.org/project/pipenv/) installed
-* [**node.js**](https://nodejs.org/) and [**AWS CDK**](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html) installed 
+* [**node.js**](https://nodejs.org/), [**typescript**](https://www.typescriptlang.org/), and [**AWS CDK**](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html) installed 
 * **Docker** installed (required by CDK to [package Python lambda functions](https://docs.aws.amazon.com/cdk/api/latest/docs/aws-lambda-python-readme.html))
 
 ### Setup steps
