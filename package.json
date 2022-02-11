@@ -11,24 +11,24 @@
     "cdk": "cdk"
   },
   "devDependencies": {
-    "@aws-cdk/assert": "^1.87.0",
+    "@aws-cdk/assert": "^2.10.0",
     "@types/jest": "^26.0.10",
-    "@types/node": "10.17.27",
+    "@types/node": "^10.17.27",
+    "aws-cdk": "^2.10.0",
     "jest": "^26.4.2",
     "ts-jest": "^26.2.0",
-    "aws-cdk": "^1.87.0",
-    "ts-node": "^8.1.0",
+    "ts-node": "^10.4.0",
     "typescript": "~3.9.7"
   },
   "dependencies": {
-    "@aws-cdk/aws-dynamodb": "^1.87.0",
-    "@aws-cdk/aws-iam": "^1.87.0",
-    "@aws-cdk/aws-lambda": "^1.87.0",
-    "@aws-cdk/aws-lambda-python": "^1.87.0",
-    "@aws-cdk/core": "^1.87.0",
-    "@types/underscore": "^1.10.24",
+    "@aws-cdk/aws-dynamodb": "^1.143.0",
+    "@aws-cdk/aws-iam": "^1.143.0",
+    "@aws-cdk/aws-lambda": "^1.143.0",
+    "@aws-cdk/aws-lambda-python": "^1.143.0",
+    "@aws-cdk/core": "^1.143.0",
+    "@types/underscore": "^1.11.4",
     "aws-cdk-dynamodb-seeder": "^1.56.1",
-    "source-map-support": "^0.5.16",
-    "underscore": "^1.11.0"
+    "source-map-support": "^0.5.21",
+    "underscore": "^1.13.1"
   }
 }

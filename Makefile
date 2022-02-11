@@ -6,7 +6,6 @@ INPUT_CONFIG_PATH=$(SELF_DIR)$(INPUT_CONFIG_FILE)
 
 ifneq ("$(wildcard $(INPUT_CONFIG_PATH))","")
   STACK_CONFIG_NAME := $(call FromInConf,$(INPUT_CONFIG_PATH),stack_config_name)
-  AWS_PROFILE := $(call FromInConf,$(INPUT_CONFIG_PATH),aws_profile)
   AWS_REGION := $(call FromInConf,$(INPUT_CONFIG_PATH),region)
   STAGE := $(call FromInConf,$(INPUT_CONFIG_PATH),stage)
 else
@@ -22,7 +21,7 @@ target:
 
 init:  ## initialize CDK environment. Needed only the first time
 	@echo "Initializing CDK environment"
-	@cdk bootstrap --profile $(AWS_PROFILE)
+	@cdk bootstrap
 
 
 deploy: ##=> Deploy services
@@ -31,9 +30,9 @@ deploy: ##=> Deploy services
 	$(MAKE) deploy.lex
 
 deploy.backend: ##=> Deploy backend lambda handlers
-	@echo "Pushing CDK stack '$(STACK_CONFIG_NAME)' with profile '$(AWS_PROFILE)' to cloud"
+	@echo "Pushing CDK stack '$(STACK_CONFIG_NAME)' using the Default CLI profile to cloud"
 	@npm run build
-	@cdk deploy $(STACK_CONFIG_NAME) --profile $(AWS_PROFILE) \
+	@cdk deploy $(STACK_CONFIG_NAME)  \
 		--require-approval never \
 		--outputs-file $(STACK_OUTPUT_PATH) \
 

@@ -42,11 +42,11 @@ Ensure you have the following in place before deploying the application
     ```
     [
       {
-        "Patient_ID": "096b464",
-        "First_Name": "<Your name>",
-        "Phone_Num": "<your phone number>",
+        "Patient_ID": "07071969",
+        "First_Name": "<your name>",
+        "Phone_Num": "<your phone number",
         "Time_Zone": "US/Eastern",
-        "Zip_Code": "<test-zipcode>"
+        "Zip_Code": "<test-zipcode"
       }
     ]
     ```
@@ -58,7 +58,7 @@ Ensure you have the following in place before deploying the application
     ```
     [
       {
-        "Patient_ID": "096b464",
+        "Patient_ID": "07071969",
         "First_Name": "Angela",
         "Phone_Num": "+15556667788",
         "Time_Zone": "US/Eastern",
@@ -67,7 +67,7 @@ Ensure you have the following in place before deploying the application
     ]
    ```
 
-1. If your aws cli is configured to run with a profiled different from `default`, change the `aws_profile` parameter in the `config.json` file
+1. This deployment is configured to run with the **default** CLI profile.  Please ensure your **default profile** is pointing to the account you wish to deploy to.
 
 1. Ensure you have CDK installed by running 
 
@@ -137,8 +137,8 @@ Ensure you have the following in place before deploying the application
 
   ```json
   {
-    "UserId": "096b464",
-    "Date": "2020/10/30"
+    "UserId": "07071969",
+    "Date": "2022/02/11"
   }
   ```
 
