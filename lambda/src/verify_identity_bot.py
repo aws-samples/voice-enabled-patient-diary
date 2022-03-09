@@ -2,7 +2,7 @@ import logging
 import pytz
 from datetime import datetime, timezone
 from lex_bot_handler import LexBotHandler
-from common.lex_config import LOG_LEVEL, INTENT_VERIFY_IDENTITY, SLOT_ZIPCODE, AUTH_RESULT_ATTR
+from common.lex_config import LOG_LEVEL, INTENT_VERIFY_IDENTITY, SLOT_AUTHCODE, AUTH_RESULT_ATTR
 from common import lex_helper as helper
 from common import msg_strings
 
@@ -28,7 +28,7 @@ def verify_identity(intent_request):
 
     user = helper.lookup_user(session_attributes)
 
-    zipcode_input = helper.get_attribute(slots, SLOT_AUTHCODE, None)
+    authcode_input = helper.get_attribute(slots, SLOT_AUTHCODE, None)
     if authcode_input == user.auth_code:
         logger.info('authentication code match!')
         user_local_tz = pytz.timezone(user.timezone)
@@ -42,7 +42,7 @@ def verify_identity(intent_request):
                             message_type='PlainText')
     else:
         logger.info('authentication code mismatch!')
-        msg = msg_strings.get('AUTH_CODE_MISMATCH').format(zipcode_input)
+        msg = msg_strings.get('AUTH_CODE_MISMATCH').format(authcode_input)
         attempt_count = int(helper.get_attribute(session_attributes, ATTEMPT_COUNT_ATTR, "1"))
         if attempt_count >= MAX_RETRY:
             msg += msg_strings.get('AUTH_CODE_GOODBYE')
@@ -54,7 +54,7 @@ def verify_identity(intent_request):
             session_attributes[ATTEMPT_COUNT_ATTR] = attempt_count + 1
             msg += msg_strings.get('AUTH_CODE_RETRY')
             logger.info(f'attempt count ({attempt_count}) less than max retry count {MAX_RETRY}.')
-            return helper.elicit_slot(session_attributes, INTENT_VERIFY_IDENTITY, slots, SLOT_ZIPCODE,
+            return helper.elicit_slot(session_attributes, INTENT_VERIFY_IDENTITY, slots, SLOT_AUTHCODE,
                                       message_content=helper.wrap_ssml_tag(msg),
                                       message_type='SSML')
 

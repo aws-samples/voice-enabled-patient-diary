@@ -29,7 +29,7 @@ SLOT_BODY_PART_MODIFIER = 'modifier'
 SLOT_PAIN_LEVEL = 'painLevel'
 
 # identity
-SLOT_ZIPCODE = 'zipcode'
+SLOT_AUTHCODE = 'authcode'
 AUTH_RESULT_ATTR = 'AuthResult'
 
 # quality of life
