@@ -19,11 +19,11 @@
           "type": "CodeHook"
         },
         "sampleUtterances": [
-          "{zipcode}",
-          "yes it is {zipcode}",
-          "yes zipcode is {zipcode}",
-          "my zipcode is {zipcode}",
-          "yeah my zipcode is {zipcode}"
+          "{authcode}",
+          "yes it is {authcode}",
+          "yes authentication code is {authcode}",
+          "my authentication code is {authcode}",
+          "yeah my  authentication code is {authcode}"
         ],
         "slots": [
           {
@@ -35,13 +35,13 @@
               "messages": [
                 {
                   "contentType": "PlainText",
-                  "content": "What's your zip code?"
+                  "content": "What's your authentication code?"
                 }
               ],
               "maxAttempts": 2
             },
             "priority": 2,
-            "name": "zipcode"
+            "name": "authcode"
           }
         ]
       }

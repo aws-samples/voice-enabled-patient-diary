@@ -1,7 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as dynamodb from '@aws-cdk/aws-dynamodb';
-//import { AwsCustomResource } from '@aws-cdk/custom-resources';
+import { AwsCustomResource } from '@aws-cdk/custom-resources';
 
 const iam = require('@aws-cdk/aws-iam');
 

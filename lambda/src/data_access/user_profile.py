@@ -14,12 +14,12 @@ logger.setLevel(LOG_LEVEL)
 
 
 class UserProfile:
-    def __init__(self, uid, phone=None, first_name=None, zip_code=None, timezone='UTC', caretaker_num=None,
+    def __init__(self, uid, phone=None, first_name=None, auth_code=None, timezone='UTC', caretaker_num=None,
                  provider_num=None, provider_email=None):
         self.uid = uid
         self.phone = phone
         self.first_name = first_name
-        self.zip_code = zip_code
+        self.auth_code = auth_code
         self.timezone = timezone
         self.caretaker_num = caretaker_num
         self.provider_num = provider_num
@@ -30,7 +30,7 @@ class UserProfile:
             return self.uid == other.uid and \
                    self.phone == other.phone and \
                    self.first_name == other.first_name and \
-                   self.zip_code == other.zip_code and \
+                   self.auth_code == other.auth_code and \
                    self.timezone == other.timezone and \
                    self.caretaker_num == other.caretaker_num and \
                    self.provider_num == other.provider_num
@@ -43,13 +43,13 @@ class UserProfile:
         return f'ID={self.uid};' \
                f'phone={self.phone};' \
                f'timezone={self.timezone};' \
-               f'zip_code={self.zip_code};'
+               f'auth_code={self.auth_code};'
 
 
 TEST_USER = UserProfile(uid='TEST_ID',
                         phone='+12345678901',
                         first_name='test user',
-                        zip_code='12345',
+                        auth_code='123456',
                         timezone='US/Eastern',
                         caretaker_num=None,
                         provider_num='+12345678901',
@@ -61,7 +61,7 @@ def user_from_entry(user_item):
     return UserProfile(uid=user_item['Patient_ID'],
                        phone=user_item.get('Phone_Num', None),
                        first_name=user_item.get('First_Name', None),
-                       zip_code=user_item.get('Zip_Code', None),
+                       auth_code=user_item.get('Auth_Code', None),
                        timezone=user_item.get('Time_Zone', 'UTC'),
                        caretaker_num=user_item.get('Caretaker_Phone_Num', None),
                        provider_num=user_item.get('Provider_Phone_Numer', None),

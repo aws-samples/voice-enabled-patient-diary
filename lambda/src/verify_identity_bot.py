@@ -28,9 +28,9 @@ def verify_identity(intent_request):
 
     user = helper.lookup_user(session_attributes)
 
-    zipcode_input = helper.get_attribute(slots, SLOT_ZIPCODE, None)
-    if zipcode_input == user.zip_code:
-        logger.info('zip code match!')
+    zipcode_input = helper.get_attribute(slots, SLOT_AUTHCODE, None)
+    if authcode_input == user.auth_code:
+        logger.info('authentication code match!')
         user_local_tz = pytz.timezone(user.timezone)
         today = datetime.now(tz=timezone.utc).astimezone(user_local_tz)
 
@@ -41,18 +41,18 @@ def verify_identity(intent_request):
                             message_content=msg,
                             message_type='PlainText')
     else:
-        logger.info('zip code mismatch!')
-        msg = msg_strings.get('ZIP_CODE_MISMATCH').format(zipcode_input)
+        logger.info('authentication code mismatch!')
+        msg = msg_strings.get('AUTH_CODE_MISMATCH').format(zipcode_input)
         attempt_count = int(helper.get_attribute(session_attributes, ATTEMPT_COUNT_ATTR, "1"))
         if attempt_count >= MAX_RETRY:
-            msg += msg_strings.get('ZIP_CODE_GOODBYE')
+            msg += msg_strings.get('AUTH_CODE_GOODBYE')
             logger.info(f'attempt count ({attempt_count}) reached max retry count. failed authentication.')
             session_attributes[AUTH_RESULT_ATTR] = 'AuthFail'
             return helper.close(session_attributes, helper.FulfillmentState.FULFILLED,
                                 message_content=helper.wrap_ssml_tag(msg), message_type='SSML')
         else:
             session_attributes[ATTEMPT_COUNT_ATTR] = attempt_count + 1
-            msg += msg_strings.get('ZIP_CODE_RETRY')
+            msg += msg_strings.get('AUTH_CODE_RETRY')
             logger.info(f'attempt count ({attempt_count}) less than max retry count {MAX_RETRY}.')
             return helper.elicit_slot(session_attributes, INTENT_VERIFY_IDENTITY, slots, SLOT_ZIPCODE,
                                       message_content=helper.wrap_ssml_tag(msg),

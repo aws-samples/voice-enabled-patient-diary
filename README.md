@@ -46,7 +46,7 @@ Ensure you have the following in place before deploying the application
         "First_Name": "<your name>",
         "Phone_Num": "<your phone number",
         "Time_Zone": "US/Eastern",
-        "Zip_Code": "<test-zipcode"
+        "Auth_Code": "<auth code>"
       }
     ]
     ```
@@ -59,10 +59,10 @@ Ensure you have the following in place before deploying the application
     [
       {
         "Patient_ID": "07071969",
-        "First_Name": "Angela",
+        "First_Name": "Paul",
         "Phone_Num": "+15556667788",
         "Time_Zone": "US/Eastern",
-        "Zip_Code": "12345"
+        "Auth_Code": "123456"
       }
     ]
    ```
