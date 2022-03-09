@@ -453,7 +453,7 @@
       "parameters": [
         {
           "name": "Text",
-          "value": "<speak>To verify your identity, can you tell me your zipcode? </speak>",
+          "value": "<speak>To verify your identity, can you tell me your authentication code? </speak>",
           "namespace": null
         },
         {
@@ -604,7 +604,7 @@
       "parameters": [
         {
           "name": "Text",
-          "value": "<speak>Hello! Clinical trial assistant at your service. </speak>",
+          "value": "<speak>Hello! This is Darci, Your clinical trial assistant. </speak>",
           "namespace": null
         },
         {
@@ -632,7 +632,7 @@
       "parameters": [
         {
           "name": "Text",
-          "value": "Hello. This is clinical trial assistant. It is time to report your patient diary.",
+          "value": "Hello. This is Darci, your trial assistant. It is time to report your patient diary.",
           "namespace": null
         },
         {
