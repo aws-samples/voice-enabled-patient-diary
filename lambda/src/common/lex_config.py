@@ -27,6 +27,7 @@ SLOT_SYMPTOM_ONE = 'symptom'
 SLOT_BODY_PART = 'bodyPart'
 SLOT_BODY_PART_MODIFIER = 'modifier'
 SLOT_PAIN_LEVEL = 'painLevel'
+INTENSITY_THRESHOLD = 8  # pain intensity >= this level will trigger a notification to medical provider
 
 # identity
 SLOT_AUTHCODE = 'authcode'

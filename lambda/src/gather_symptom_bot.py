@@ -2,7 +2,7 @@ import logging
 from lex_bot_handler import LexBotHandler
 from common.lex_config import LOG_LEVEL, INTENT_NO_SYMPTOM, INTENT_REPORT_SYMPTOM, INTENT_YES_SYMPTOM, \
     INTENT_SYMPTOM_FALLBACK, SLOT_SYMPTOM_ONE, SLOT_BODY_PART, SLOT_BODY_PART_MODIFIER, SLOT_PAIN_LEVEL, \
-    BOT_SYMPTOM_NAME
+    BOT_SYMPTOM_NAME, INTENSITY_THRESHOLD
 from common import lex_helper as helper
 from common import msg_strings
 from data_access import symptom_reporter
@@ -21,7 +21,6 @@ logger.setLevel(LOG_LEVEL)
 localized_symptom = set(['itch', 'pain', 'swelling', 'rash', 'cramp'])
 intensity_symptom = set(['headache', 'pain', 'cramp'])
 
-INTENSITY_THRESHOLD = 8  # pain intensity >= this level will trigger a notification to medical provider
 
 descriptor_to_symptom = {
     'are experiencing {}': {'pain'},
