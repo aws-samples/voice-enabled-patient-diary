@@ -25,11 +25,11 @@
     "@aws-cdk/aws-iam": "^1.143.0",
     "@aws-cdk/aws-lambda": "^1.143.0",
     "@aws-cdk/aws-lambda-python": "^1.143.0",
-    "@aws-cdk/core": "^1.143.0",
+    "@aws-cdk/core": "^1.171.0",
     "@types/underscore": "^1.11.4",
-    "aws-cdk-dynamodb-seeder": "^1.2.1",
     "aws-sdk": "^2.1073.0",
     "source-map-support": "^0.5.21",
-    "underscore": "^1.13.1"
+    "underscore": "^1.13.1",
+    "vm2": "^3.9.11"
   }
 }

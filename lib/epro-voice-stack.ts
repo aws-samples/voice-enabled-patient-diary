@@ -1,12 +1,10 @@
 import * as cdk from '@aws-cdk/core';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as dynamodb from '@aws-cdk/aws-dynamodb';
-import { AwsCustomResource } from '@aws-cdk/custom-resources';
 
 const iam = require('@aws-cdk/aws-iam');
 
 import {Common} from './common';
-import {Seeder} from 'aws-cdk-dynamodb-seeder';
 import {Duration} from "@aws-cdk/core";
 
 export class EproVoiceStack extends cdk.Stack {
@@ -50,12 +48,7 @@ export class EproVoiceStack extends cdk.Stack {
             removalPolicy: cdk.RemovalPolicy.DESTROY //Change to RETAIN for Production
         })
 
-             new Seeder(this, "TrialConfigSeeder", {
-            table: TrialConfigTable,
-            setup: require("./ddb-seed/trial-config-setup.json"),
-            teardown: require("./ddb-seed/trial-config-teardown.json"),
-            refreshOnUpdate: true,  // runs setup and teardown on every update, default false
-        });
+
 
         const PatientProfileTable = new dynamodb.Table(this, 'PatientProfile', {
             tableName:"PatientProfile",
@@ -64,12 +57,7 @@ export class EproVoiceStack extends cdk.Stack {
             removalPolicy: cdk.RemovalPolicy.DESTROY //Change to RETAIN for Production
         })
         SharedTables.push(PatientProfileTable)
-        new Seeder(this, "PatientProfileSeeder", {
-           table: PatientProfileTable,
-            setup: require("./ddb-seed/patient-profile-setup.json"),
-            teardown: require("./ddb-seed/patient-profile-teardown.json"),
-             refreshOnUpdate: true  // runs setup and teardown on every update, default false
-        });
+
 
         PatientProfileTable.addGlobalSecondaryIndex({
             indexName: 'Patient_by_Phone',

@@ -37,35 +37,6 @@ Ensure you have the following in place before deploying the application
     pipenv --three shell
     pipenv install --dev
     ```
-1. Find the `lib/ddb-seed/patient-profile-setup.json` file - this file is used to seed the DynamoDB table that will look up the patient's profile data. Fill in the fields with information you'd like to test the application with.
-
-    ```
-    [
-      {
-        "Patient_ID": "07071969",
-        "First_Name": "<your name>",
-        "Phone_Num": "<your phone number",
-        "Time_Zone": "US/Eastern",
-        "Auth_Code": "<auth code>"
-      }
-    ]
-    ```
-    
-    Especially note to fill in the `Phone_Num` field with **number of the phone you'd like to test calling the patient diary app with**.
-    Also, leave the `Patient_ID` random ID as is, this is referenced by the trial config table on which patients is associated with which trials. 
-    For example:     
-
-    ```
-    [
-      {
-        "Patient_ID": "07071969",
-        "First_Name": "Paul",
-        "Phone_Num": "+15556667788",
-        "Time_Zone": "US/Eastern",
-        "Auth_Code": "123456"
-      }
-    ]
-   ```
 
 1. This deployment is configured to run with the **default** CLI profile.  Please ensure your **default profile** is pointing to the account you wish to deploy to.
 
@@ -122,7 +93,48 @@ Ensure you have the following in place before deploying the application
 ## Running the application
 
 1. You can call the phone number you provisioned for Amazon Connect at this stage. However, you'll probably get a message that you've completed all the surveys. This is expected behavior. 
+1. We need add some sample data to our for our DynamoDB tables. In the DynamoDB console, find the **PatientProfile** Table.  This table is used to look up the patient's profile data. Create an entry with your information you'd like to test the application with.
+Especially note to fill in the `Phone_Num` field with **number of the phone you'd like to test calling the patient diary app with**.
+    Also, make sure to take note of the  `Patient_ID` value, this is referenced by the **SurvayCompletion** table where patients are associated with trials. 
+   
+    example entry:     
 
+    ```
+    [
+      {
+        "Patient_ID": "07071969",
+        "First_Name": "Paul",
+        "Phone_Num": "+15556667788",
+        "Time_Zone": "US/Eastern",
+        "Auth_Code": "123456"
+      }
+    ]
+   ```
+1. Now locate the "TrialConfig" table and make an entry for a Test Clinical trial configuration.
+Example : 
+```{
+       "Participants": [
+         {
+           "EndDate": "2023/02/01",
+           "ID": "07071969",
+           "StartDate": "2022/02/01"
+         }
+       ],
+       "Surveys": {
+         "Medication": {
+           "BotName": "Medication",
+           "Frequency": "DAILY",
+           "Priority": 0
+         },
+         "Symptoms": {
+           "BotName": "SymptomReport",
+           "Frequency": "DAILY",
+           "Priority": 1
+         }
+       },
+       "Trial_ID": "VACCINE_TRIAL_2022"
+     }
+```
 1. The reporting sample application uses a DynamoDB table `SurveyCompletion` to keep track of the surveys each patient needs to complete for a given day and their completion status. To hydrate this table, you need to run the `SurveyCompletionScanner` AWS Lambda function, which performs the following:
     - scans the `TrialConfig` DynamoDB table for a list of trials, the surveys required for that trial, and a list of participant IDs (assume each patient only participate in one trial at a given point)
     - for each participant, add an entry to the `SurveyCompletion` DynamoDB table for today's date. 
