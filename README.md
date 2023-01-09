@@ -2,11 +2,6 @@
 
 This repo contains a sample application to show how to build a voice interface for **patient outcome reporting** (PRO) by leveraging NLP capabilities provided by Amazon Lex and its integration with AWS's cloud contact center offering, Amazon Connect. The hands-free nature of a voice interface make patient diary reporting more accessible to a broader set of patients who may not be able to use a mobile app due to physical constraints such as vision or motion impairments. 
 
-### Example recording
-
-Click below to hear an example for a patient diary reporting call using the sample application:
-https://voice-enabled-patient-dairy-blog.s3.amazonaws.com/outbound+patient+reporting.mp3 
-
 ## Architecture
 
 ![](./doc-images/architecture.png)
