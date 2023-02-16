@@ -8,5 +8,6 @@ let env = {account: config.account, region: config.region};
 
 const app = new cdk.App();
 new EproVoiceStack(app, 'EproVoiceStack', {
-    env: env
+    env: env,
+      description: "Accelerator meant to showcase a voice enabled patient diary prototype ('uksb-1tsflhn9s')",
 });
