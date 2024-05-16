@@ -33,7 +33,7 @@ Ensure you have the following in place before deploying the application
     pipenv install --dev
     ```
 
-1. This deployment is configured to run with the **default** CLI profile.  Please ensure your **default profile** is pointing to the account you wish to deploy to.
+1. This deployment is configured to run with the **default** CLI profile.  Please ensure your **default** profile is pointing to the account you wish to deploy to.
 
 1. Ensure you have CDK installed by running 
 
